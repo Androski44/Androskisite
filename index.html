@@ -1,57 +1,499 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Androski | Digital Fortress Architect</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="assets/css/styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Androski | Digital Fortress Architect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== Global Dark Theme ===== */
+    :root {
+      --bg-0: #000;
+      --bg-1: #111;
+      --text: #fff;
+      --muted: #ccc;
+      --neon-1: #00f6ff;
+      --neon-2: #00ff9c;
+      --neon-3: #ffff00;
+      --card: #111;
+      --border: #00f6ff;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: radial-gradient(circle at center, var(--bg-0) 40%, var(--bg-1) 100%);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      line-height: 1.6;
+    }
+    a { color: var(--neon-1); text-decoration: none; }
+    img { max-width: 100%; height: auto; }
+
+    /* ===== Navigation ===== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(6px);
+      background: rgba(0, 0, 0, 0.6);
+      border-bottom: 1px solid rgba(0, 246, 255, 0.2);
+    }
+    .nav-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: Orbitron, Inter, sans-serif;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+    .brand .mark {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--neon-1), 0 0 18px var(--neon-2);
+      background: radial-gradient(circle, var(--neon-1), var(--neon-2));
+    }
+    .nav-links a {
+      margin-left: 18px;
+      font-weight: 600;
+      padding: 6px 8px;
+      border-radius: 4px;
+      transition: 0.25s ease;
+    }
+    .nav-links a:hover {
+      color: #000;
+      background: var(--neon-1);
+      box-shadow: 0 0 12px var(--neon-1);
+    }
+
+    /* ===== Hero ===== */
+    header.hero {
+      text-align: center;
+      padding: 40px 20px 20px;
+    }
+    .phoenix {
+      position: relative;
+      width: 320px;
+      height: 320px;
+      margin: 16px auto 12px;
+      background: linear-gradient(135deg, var(--neon-1), var(--neon-2), var(--neon-3));
+      border-radius: 50% 50% 40% 40%;
+      box-shadow: 0 0 40px var(--neon-1), 0 0 80px var(--neon-2);
+      animation: pulse 2s infinite;
+    }
+    .wing {
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      background: linear-gradient(45deg, var(--neon-1), transparent);
+      border-radius: 50%;
+      top: -52px;
+      box-shadow: 0 0 20px var(--neon-1);
+    }
+    .wing.left { left: -128px; transform: rotate(-28deg); }
+    .wing.right { right: -128px; transform: rotate(28deg); }
+    .lightning {
+      position: absolute;
+      width: 4px; height: 90px;
+      background: var(--neon-3);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) rotate(18deg);
+      box-shadow: 0 0 12px var(--neon-3);
+      animation: flicker 0.28s infinite;
+    }
+    .chain {
+      position: absolute;
+      width: 11px; height: 110px;
+      background: repeating-linear-gradient(
+        to bottom,
+        #bbb, #bbb 10px,
+        #333 10px, #333 20px
+      );
+      left: 50%; top: 80%;
+      transform: translateX(-50%);
+      opacity: 0.75;
+      animation: sway 3.5s ease-in-out infinite;
+    }
+
+    .hero h1 {
+      font-family: Orbitron, Inter, sans-serif;
+      font-size: 2rem;
+      margin: 8px 0 6px;
+      letter-spacing: 0.4px;
+      text-shadow: 0 0 8px var(--neon-1);
+    }
+    .tagline {
+      color: var(--neon-1);
+      text-shadow: 0 0 10px var(--neon-1), 0 0 20px var(--neon-2);
+      font-weight: 600;
+      margin-top: 6px;
+      animation: glowPulse 4s infinite;
+    }
+    .hero p {
+      color: var(--muted);
+      max-width: 720px;
+      margin: 10px auto 16px;
+    }
+    .hero-actions { margin-top: 10px; }
+
+    /* ===== Buttons ===== */
+    .btn {
+      display: inline-block;
+      padding: 12px 20px;
+      margin: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      border-radius: 8px;
+      transition: all 0.28s ease;
+      border: 2px solid transparent;
+    }
+    .btn.primary {
+      background: var(--neon-1);
+      color: #000;
+      box-shadow: 0 0 15px var(--neon-1);
+    }
+    .btn.primary:hover {
+      background: var(--neon-2);
+      box-shadow: 0 0 24px var(--neon-2);
+      transform: translateY(-2px);
+    }
+    .btn.secondary {
+      background: #222;
+      color: #fff;
+      border: 2px solid var(--neon-1);
+    }
+    .btn.secondary:hover {
+      background: var(--neon-1);
+      color: #000;
+      transform: translateY(-2px);
+      box-shadow: 0 0 18px var(--neon-1);
+    }
+
+    /* ===== Sections ===== */
+    section {
+      padding: 60px 20px;
+      text-align: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    section h2 {
+      font-family: Orbitron, Inter, sans-serif;
+      color: var(--neon-1);
+      text-shadow: 0 0 10px var(--neon-1);
+      margin-bottom: 14px;
+    }
+    section p { color: var(--muted); }
+
+    /* ===== About (Symbolic intro) ===== */
+    #about { max-width: 900px; }
+    #about .manifesto {
+      max-width: 820px;
+      margin: 0 auto;
+      font-size: 1.05rem;
+    }
+
+    /* ===== Products Grid ===== */
+    .product-grid {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 26px auto 4px;
+      max-width: 1000px;
+    }
+    .product-card {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      width: 300px;
+      text-align: center;
+      box-shadow: 0 0 15px var(--neon-1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: glowPulse 4s infinite;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 24px var(--neon-2);
+    }
+    .product-card h3 { color: var(--neon-1); margin-bottom: 8px; }
+    .product-card p { color: var(--muted); min-height: 48px; }
+
+    /* ===== Testimonials ===== */
+    .testimonial-grid {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .testimonial-card {
+      background: #0f0f0f;
+      border: 2px solid var(--neon-2);
+      border-radius: 12px;
+      padding: 20px;
+      width: 340px;
+      color: #fff;
+      box-shadow: 0 0 15px var(--neon-2);
+    }
+    .testimonial-card span {
+      display: block;
+      margin-top: 10px;
+      color: var(--neon-1);
+      font-weight: 700;
+    }
+
+    /* ===== Contact ===== */
+    form.contact {
+      max-width: 700px;
+      margin: 20px auto 0;
+      text-align: left;
+      background: #0c0c0c;
+      border: 1px solid rgba(0, 246, 255, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 0 16px rgba(0, 246, 255, 0.12);
+    }
+    .field {
+      margin-bottom: 16px;
+    }
+    .field label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: var(--neon-1);
+      text-shadow: 0 0 6px var(--neon-1);
+    }
+    .field input, .field textarea, .field select {
+      width: 100%;
+      padding: 12px 12px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      background: #0a0a0a;
+      color: var(--text);
+      outline: none;
+      transition: 0.25s ease;
+    }
+    .field input:focus, .field textarea:focus, .field select:focus {
+      border-color: var(--neon-1);
+      box-shadow: 0 0 12px rgba(0, 246, 255, 0.3);
+    }
+
+    /* ===== Footer ===== */
+    footer {
+      padding: 26px 20px 40px;
+      text-align: center;
+      border-top: 1px solid rgba(0, 246, 255, 0.18);
+      color: var(--muted);
+    }
+    .socials a {
+      margin: 0 8px;
+      padding: 6px 8px;
+      border-radius: 6px;
+      transition: 0.25s ease;
+    }
+    .socials a:hover {
+      background: rgba(0, 246, 255, 0.12);
+      box-shadow: 0 0 10px rgba(0, 246, 255, 0.35);
+    }
+
+    /* ===== Animations ===== */
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    @keyframes sway {
+      0%, 100% { transform: translateX(-50%) rotate(0deg); }
+      50% { transform: translateX(-50%) rotate(2deg); }
+    }
+    @keyframes glowPulse {
+      0%, 100% { box-shadow: 0 0 15px var(--neon-1); }
+      50% { box-shadow: 0 0 25px var(--neon-2); }
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 768px) {
+      .phoenix { width: 220px; height: 220px; }
+      .wing { width: 120px; height: 120px; top: -42px; }
+      .wing.left { left: -96px; }
+      .wing.right { right: -96px; }
+      .hero h1 { font-size: 1.6rem; }
+      .product-card { width: 100%; max-width: 420px; }
+      .testimonial-card { width: 100%; max-width: 480px; }
+      .nav-links a { margin-left: 12px; }
+      .hero-actions .btn { width: auto; }
+    }
+  </style>
 </head>
 <body>
-    <header class="hero">
-        <h1>🛡️ Digital Fortress for Everyday Citizens</h1>
-        <p>I've been robbed, scammed, and digitally manipulated.<br>
-           So I built military-grade protection systems to help you fight back.</p>
-        <div class="hero-actions">
-            <a href="#products" class="btn primary">See My Arsenal</a>
-            <a href="marketing/demo.html" class="btn secondary">Live Demo</a>
-        </div>
-    </header>
-    
-    <section id="mission">
-        <h2>My Mission: Turn Victims Into Victors</h2>
-        <p>After being digitally robbed multiple times, I dedicated my life to building 
-           protection tools that ordinary citizens can use to defend themselves from 
-           the same manipulation I experienced.</p>
-    </section>
-    
-    <section id="products">
-        <div class="product-grid">
-            <div class="product-card">
-                <h3>🏰 Security Fortress</h3>
-                <p>Military-grade authentication with quantum-resistant encryption</p>
-                <a href="security/">View Details</a>
-                <a href="https://github.com/yourusername/security-fortress">Source Code</a>
-            </div>
-            
-            <div class="product-card">
-                <h3>🤖 AI Marketing Platform</h3>
-                <p>15+ AI agents for ethical marketing automation</p>
-                <a href="marketing/">Live Demo</a>
-                <a href="https://github.com/yourusername/marketing-platform">Source Code</a>
-            </div>
-            
-            <div class="product-card">
-                <h3>💰 Finance Protection Bot</h3>
-                <p>AI-powered scam detection based on real robbery experience</p>
-                <a href="finance/">Learn More</a>
-            </div>
-            
-            <div class="product-card">
-                <h3>📚 Citizen Education</h3>
-                <p>Books and guides for digital self-defense</p>
-                <a href="books/">Download Resources</a>
-            </div>
-        </div>
-    </section>
+
+  <!-- ===== Navigation ===== -->
+  <nav aria-label="Primary">
+    <div class="nav-wrap">
+      <div class="brand">
+        <span class="mark" aria-hidden="true"></span>
+        <span>Androski</span>
+      </div>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#mission">Mission</a>
+        <a href="#products">Products</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+        <a href="marketing/demo.html">Live Demo</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== Hero ===== -->
+  <header class="hero">
+    <div class="phoenix" role="img" aria-label="Neon phoenix emblem of resilience">
+      <div class="wing left" aria-hidden="true"></div>
+      <div class="wing right" aria-hidden="true"></div>
+      <div class="lightning" aria-hidden="true"></div>
+      <div class="chain" aria-hidden="true"></div>
+    </div>
+    <h1>Digital fortress for everyday citizens</h1>
+    <p class="tagline">Rising from ashes to guard your legacy.</p>
+    <p>I've been robbed, scammed, and digitally manipulated. So I built protection systems that help you fight back, reclaim your freedom, and turn victims into victors.</p>
+    <div class="hero-actions">
+      <a href="#products" class="btn primary">See My Arsenal</a>
+      <a href="marketing/demo.html" class="btn secondary">Live Demo</a>
+    </div>
+  </header>
+
+  <!-- ===== About / Introduction ===== -->
+  <section id="about" aria-labelledby="about-title">
+    <h2 id="about-title">Who I am</h2>
+    <p class="manifesto">
+      I'm Androski — a Digital Fortress Architect. Scarred by scams, forged by fire, I build military‑grade defenses for the public.
+      My craft blends open‑source security, archetypal design, and neon clarity into tools that break chains, unleash lightning, and protect what matters:
+      your legacy. From ruin to rebirth — your fortress awakens.
+    </p>
+  </section>
+
+  <!-- ===== Mission ===== -->
+  <section id="mission" aria-labelledby="mission-title">
+    <h2 id="mission-title">My mission: Turn victims into victors</h2>
+    <p>
+      After being digitally robbed multiple times, I dedicated my life to building protection tools that ordinary citizens can use to defend themselves
+      against manipulation, fraud, and digital attacks. Simple to deploy. Powerful by design. Built for your peace of mind.
+    </p>
+  </section>
+
+  <!-- ===== Products ===== -->
+  <section id="products" aria-labelledby="products-title">
+    <h2 id="products-title">My arsenal</h2>
+    <div class="product-grid">
+      <div class="product-card">
+        <h3>Shield Protocol</h3>
+        <p>Layered firewall and threat filtering designed for everyday users.</p>
+        <a href="#" class="btn primary">Learn More</a>
+      </div>
+      <div class="product-card">
+        <h3>Lightning Scanner</h3>
+        <p>Real‑time scam and phishing detection across mail, web, and chat.</p>
+        <a href="#" class="btn primary">Learn More</a>
+      </div>
+      <div class="product-card">
+        <h3>Chain Vault</h3>
+        <p>Secure crypto and digital assets with multi‑sig and revocation flows.</p>
+        <a href="#" class="btn primary">Learn More</a>
+      </div>
+      <div class="product-card">
+        <h3>Signal Watchtower</h3>
+        <p>Monitor accounts, permissions, and anomalies with alert escalation.</p>
+        <a href="#" class="btn primary">Learn More</a>
+      </div>
+      <div class="product-card">
+        <h3>Ghost Trace</h3>
+        <p>Privacy toolkit: trackers blocked, metadata stripped, identity guarded.</p>
+        <a href="#" class="btn primary">Learn More</a>
+      </div>
+      <div class="product-card">
+        <h3>Oath Ledger</h3>
+        <p>Incident log + recovery rituals for fast containment and rebuild.</p>
+        <a href="#" class="btn primary">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Testimonials ===== -->
+  <section id="testimonials" aria-labelledby="testimonials-title">
+    <h2 id="testimonials-title">Voices of victory</h2>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <p>"Shield Protocol stopped a phishing attack cold. I feel empowered again."</p>
+        <span>— Alex, Denver</span>
+      </div>
+      <div class="testimonial-card">
+        <p>"Chain Vault secured my crypto after a scam. This fortress is the real deal."</p>
+        <span>— Maria, NYC</span>
+      </div>
+      <div class="testimonial-card">
+        <p>"Lightning Scanner flags bad links instantly. It’s become part of my routine."</p>
+        <span>— Jordan, Austin</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Contact / CTA ===== -->
+  <section id="contact" aria-labelledby="contact-title">
+    <h2 id="contact-title">Request protection</h2>
+    <p>Tell me what you’re facing. I’ll help you deploy the right defenses.</p>
+    <form class="contact" action="#" method="post">
+      <div class="field">
+        <label for="name">Your name</label>
+        <input id="name" name="name" type="text" placeholder="Jane Doe" required />
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="you@example.com" required />
+      </div>
+      <div class="field">
+        <label for="need">What do you need?</label>
+        <select id="need" name="need" required>
+          <option value="">Select an option</option>
+          <option>Shield Protocol</option>
+          <option>Lightning Scanner</option>
+          <option>Chain Vault</option>
+          <option>Signal Watchtower</option>
+          <option>Ghost Trace</option>
+          <option>Oath Ledger</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="message">Describe the situation</label>
+        <textarea id="message" name="message" rows="5" placeholder="What happened? What outcomes do you want?" required></textarea>
+      </div>
+      <button type="submit" class="btn primary">Get Protection</button>
+    </form>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <div class="socials" aria-label="Social links">
+      <a href="#" aria-label="LinkedIn">LinkedIn</a>
+      <a href="#" aria-label="Twitter/X">X</a>
+      <a href="#" aria-label="Email">Email</a>
+    </div>
+    <p style="margin-top:10px;">© 2025 Androski. Forged in fire, built to protect.</p>
+  </footer>
+
 </body>
 </html>
