@@ -92,7 +92,20 @@
       border-radius: 50% 50% 40% 40%;
       box-shadow: 0 0 40px var(--neon-1), 0 0 80px var(--neon-2);
       animation: pulse 2s infinite;
+    }/* Keep logo responsive and smaller on mobile */
+.logo img,
+.brand img {
+    max-width: 160px;
+    height: auto;
+}
+
+@media (max-width: 600px) {
+    .logo img,
+    .brand img {
+        max-width: 110px;
     }
+}
+
     .wing {
       position: absolute;
       width: 160px;
@@ -498,4 +511,5 @@
 
 </body>
 </html>
+
 
